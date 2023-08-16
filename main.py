@@ -152,11 +152,11 @@ def display_winner(player1,player2):
 
     if len(player1['cards']) > len(player2['cards']):
         
-        print(player1['name'] + 'is the winner')
+        print(player1['name'] + ' (player1) is the winner')
 
     else:
 
-        print(player2['name'] + 'is the winner')
+        print(player2['name'] + ' (player2) is the winner')
     
     print('scores are, p1 : score ', len(player1['cards']), ', p2 socres : ',len(player2['cards']))
     print(player1)
