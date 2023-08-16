@@ -8,6 +8,9 @@ import random
 #5. get winner from each round.
 #6. display winner
 
+#prepare authentication file.
+
+
 #1
 def enter_username(player):
     
@@ -43,7 +46,6 @@ def check_password(username,password,filename):
 
         for line in file.readlines():
 
-            print(line.split(':'))
             if line.split(':')[0] == username and line.split(':')[1].replace('\n','') == password:
                 return True
 
@@ -51,18 +53,21 @@ def check_password(username,password,filename):
 
 def check_user_exists(username,filename):
     
-    with open(filename) as file:
+    try:
+        with open(filename) as file:
 
-        for line in file.readlines():
-            if line.split(':')[0] == username:
-                return True
-            
+            for line in file.readlines():
+                if line.split(':')[0] == username:
+                    return True
+    except FileNotFoundError:
+        return False
+
     return False
 
 
 def create_user(username,password,filename):
 
-    with open(filename, 'a') as file:
+    with open(filename, 'a+') as file:
         file.write(username + ':' + password + '\n')
     print('user ' + username + ' has been created')
 
