@@ -1,7 +1,6 @@
 import random
 
 
-#1
 def enter_username(player):
     '''The player is asked for their username
     
@@ -18,7 +17,6 @@ def enter_username(player):
     
     return input(player + ', please enter a your user name : ')
 
-#2
 def authenticate_user(username):
 
     '''checks the user using password authentication. If the user does not exist, then the user must set a password. For both cases, the password will be asked. If not correct, then they must enter their password until it is correct.
@@ -244,7 +242,7 @@ def play_game(name1,name2,deck):
             print('winner of round is player 2 : '+name2)
         else:
             print('winner of round is player 1 : '+name1)
-i       #GIve both of the cards to the winner.
+        #GIve both of the cards to the winner.
         if winner == 1:
             
             player1['cards'].append(p1_card)

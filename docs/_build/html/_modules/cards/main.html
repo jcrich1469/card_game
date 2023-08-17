@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cards.main &mdash; card game 00.00.01 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            card game
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">cards</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">card game</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">cards.main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cards.main</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">random</span>
+
+
+<div class="viewcode-block" id="enter_username"><a class="viewcode-back" href="../../cards.html#cards.main.enter_username">[docs]</a><span class="k">def</span> <span class="nf">enter_username</span><span class="p">(</span><span class="n">player</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;The player is asked for their username</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    str : player</span>
+<span class="sd">        player1 or player2 to be displayed in when asking for input from a player.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The player&#39;s username</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="k">return</span> <span class="nb">input</span><span class="p">(</span><span class="n">player</span> <span class="o">+</span> <span class="s1">&#39;, please enter a your user name : &#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="authenticate_user"><a class="viewcode-back" href="../../cards.html#cards.main.authenticate_user">[docs]</a><span class="k">def</span> <span class="nf">authenticate_user</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;checks the user using password authentication. If the user does not exist, then the user must set a password. For both cases, the password will be asked. If not correct, then they must enter their password until it is correct.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    str : username</span>
+<span class="sd">        The username to check if exists and match their password against.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>    
+    <span class="c1">#check_username exists.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">check_user_exists</span><span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="s1">&#39;authenticatedusers.txt&#39;</span><span class="p">):</span>
+        <span class="c1">#make sure the password entered is sufficiently strong, length 8, excluding empty spaces.</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">password</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">8</span> <span class="ow">or</span> <span class="n">password</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="n">password</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;user does not exist, please enter a password of at least eight characters : &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        
+        <span class="c1">#as user does not exist, make a new user.</span>
+        <span class="n">create_user</span><span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">,</span><span class="s1">&#39;authenticatedusers.txt&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;password set for user : &#39;</span> <span class="o">+</span> <span class="n">username</span><span class="p">)</span>
+    
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    
+    <span class="c1">#NOw user exists, ask for their password.</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;now please enter the password for &#39;</span> <span class="o">+</span> <span class="n">username</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span><span class="p">)</span>        
+    <span class="c1">#keep asking if the password is wrong, until it is correct.</span>
+    <span class="k">while</span> <span class="n">check_password</span><span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">,</span><span class="s1">&#39;authenticatedusers.txt&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+
+        <span class="n">password</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;incorrect password attempt, please try again : &#39;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">username</span> <span class="o">+</span> <span class="s1">&#39; is logged in.&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="check_password"><a class="viewcode-back" href="../../cards.html#cards.main.check_password">[docs]</a><span class="k">def</span> <span class="nf">check_password</span><span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Checks the player&#39;s account username with their password to see if it is correcty matched with the textfile DB.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    str : username</span>
+<span class="sd">        The player&#39;s account username</span>
+<span class="sd">    str : password</span>
+<span class="sd">        The player&#39;s account password to match with username.</span>
+<span class="sd">    str : filename</span>
+<span class="sd">        location of textfile containing account usernames and password</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        True of False result of matching each line on textfile database.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1">#Finds the file and opens it.</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="c1">#reads each line on the file.</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+            <span class="c1">#splits the line, that uses a &#39;:&#39; delimiter. Checkst username on left of delimiter and password, on right of delimiter matches those entered.</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">username</span> <span class="ow">and</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">password</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="check_user_exists"><a class="viewcode-back" href="../../cards.html#cards.main.check_user_exists">[docs]</a><span class="k">def</span> <span class="nf">check_user_exists</span><span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;checks the user exists inside the textfile DB</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    str : username</span>
+<span class="sd">        the username to check in textfile DB.</span>
+<span class="sd">    str : filename</span>
+<span class="sd">        the file location.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    boolean</span>
+<span class="sd">        the result of whether the username exists as an account on the textfile database.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1">#Try to open the file, if it exists.</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="c1">#read each line in the file </span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+                <span class="c1"># for each line in the textfile, read the username, to the left of the &#39;:&#39; delimiter.</span>
+                <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">username</span><span class="p">:</span>
+                    <span class="c1">#if the username matches, they exist in the the textfile db.</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="c1">#If the file does not exist, the username does not exist.</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="c1">#If user is not in the DB textfile, return False.</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="create_user"><a class="viewcode-back" href="../../cards.html#cards.main.create_user">[docs]</a><span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;adds a new user inside the textfile DB</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    str : username</span>
+<span class="sd">        the username to check in textfile DB.</span>
+<span class="sd">    str : password</span>
+<span class="sd">        the user password to add to the textfile DB.</span>
+<span class="sd">    str : filename</span>
+<span class="sd">        the file location.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1">#If the file exists, add the name and password to the end of the file. If not, make a new file and then add the username and password to the file. Both adds have a &#39;:&#39; delimiter added in between and a newline escape character add to the end.</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;a+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">username</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="n">password</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;user &#39;</span> <span class="o">+</span> <span class="n">username</span> <span class="o">+</span> <span class="s1">&#39; has been created&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="setup_cards"><a class="viewcode-back" href="../../cards.html#cards.main.setup_cards">[docs]</a><span class="k">def</span> <span class="nf">setup_cards</span><span class="p">():</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Prepares the game by creating a stack of cards, called a deck.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list : deck</span>
+<span class="sd">        the sequential deck of cards for the game, randomised(shuffled).</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">deck</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># go through each color</span>
+    <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span><span class="s1">&#39;black&#39;</span><span class="p">]:</span>
+        <span class="c1"># go through  each value from 1 to 10</span>
+        <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
+            <span class="c1">#for each color and value make a unique card</span>
+            <span class="n">card</span> <span class="o">=</span> <span class="p">[</span><span class="n">color</span><span class="p">,</span><span class="n">number</span><span class="p">]</span>
+            <span class="c1">#then add that card to the deck.</span>
+            <span class="n">deck</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+    <span class="c1">#after creating a deck of thirty cards, make sure they are random.</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">deck</span><span class="p">)</span>
+    <span class="c1">#return the shuffled deck to the game.</span>
+    <span class="k">return</span> <span class="n">deck</span></div>
+
+<div class="viewcode-block" id="calculate_winner"><a class="viewcode-back" href="../../cards.html#cards.main.calculate_winner">[docs]</a><span class="k">def</span> <span class="nf">calculate_winner</span><span class="p">(</span><span class="n">card1</span><span class="p">,</span><span class="n">card2</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Compares p1s and p2s cards to see who wins.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    list : card1</span>
+<span class="sd">        Player1&#39;s card for comparison</span>
+<span class="sd">    list : card2</span>
+<span class="sd">        Player2&#39;s card for comparison</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        a number represent whether player 1 or player 2 won.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c1">#if card colors are the same,</span>
+    <span class="k">if</span> <span class="n">card1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">card2</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="c1">#compare their values.</span>
+        <span class="k">if</span> <span class="n">card1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">card2</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            
+            <span class="k">return</span> <span class="mi">1</span>
+    <span class="c1">#IF card colors are not the same, compare their colors to see if player 1 wins.</span>
+    <span class="k">if</span> <span class="n">card1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;red&#39;</span> <span class="ow">and</span> <span class="n">card2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">card1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;yellow&#39;</span> <span class="ow">and</span> <span class="n">card2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">card1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span> <span class="ow">and</span> <span class="n">card2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;yellow&#39;</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="c1">#If player 1 did not win, assume player 2 wins.</span>
+    <span class="k">return</span> <span class="mi">2</span></div>
+
+<div class="viewcode-block" id="play_game"><a class="viewcode-back" href="../../cards.html#cards.main.play_game">[docs]</a><span class="k">def</span> <span class="nf">play_game</span><span class="p">(</span><span class="n">name1</span><span class="p">,</span><span class="n">name2</span><span class="p">,</span><span class="n">deck</span><span class="p">):</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;runs the game round by round until the deck of cards are empty.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    str : name1</span>
+<span class="sd">        The player&#39;s account username</span>
+<span class="sd">    str : name2</span>
+<span class="sd">        The player 2&#39;s account username</span>
+<span class="sd">    list : deck</span>
+<span class="sd">        The stack of cards to take the top cards from.</span>
+<span class="sd">    </span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    object : player1</span>
+<span class="sd">        contains p1&#39;s name and the cards they acquired throughout playing the game.</span>
+<span class="sd">    object : player2</span>
+<span class="sd">        contains p2&#39;s name and the cards they acquired throughout playing the game.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1">#make the two players</span>
+    <span class="n">player1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="n">name1</span><span class="p">,</span><span class="s1">&#39;cards&#39;</span><span class="p">:[]}</span>
+    <span class="n">player2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="n">name2</span><span class="p">,</span><span class="s1">&#39;cards&#39;</span><span class="p">:[]}</span>
+    
+    <span class="c1">#play until the deck is empty</span>
+    <span class="k">while</span> <span class="n">deck</span> <span class="o">!=</span> <span class="p">[]:</span>
+        
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;k&#39;</span>
+        <span class="c1">#ask player 1 to press enter, if they do not, ask again, until they do.</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">key</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">name1</span> <span class="o">+</span> <span class="s1">&#39; player 1, please press enter to take your turn&#39;</span><span class="p">)</span>
+        <span class="c1">#give player one the top card from the deck.</span>
+        <span class="n">p1_card</span> <span class="o">=</span> <span class="n">deck</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">name1</span> <span class="o">+</span> <span class="s1">&#39; has got : &#39;</span><span class="p">,</span><span class="n">p1_card</span><span class="p">)</span>
+        
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;k&#39;</span>
+
+        <span class="c1">#ask player 2 to press enter, if they do not, ask again, until they do.</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">key</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">name2</span> <span class="o">+</span> <span class="s1">&#39; player 2, please press enter to take your turn&#39;</span><span class="p">)</span>
+            
+        <span class="c1">#give player two the top card from the deck.</span>
+        <span class="n">p2_card</span> <span class="o">=</span> <span class="n">deck</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">name2</span> <span class="o">+</span> <span class="s1">&#39; has got : &#39;</span><span class="p">,</span><span class="n">p2_card</span><span class="p">)</span>
+
+        <span class="c1">#compare the player&#39;s cards to see who wins.</span>
+        <span class="n">winner</span> <span class="o">=</span> <span class="n">calculate_winner</span><span class="p">(</span><span class="n">p1_card</span><span class="p">,</span><span class="n">p2_card</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">winner</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;winner of round is player 2 : &#39;</span><span class="o">+</span><span class="n">name2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;winner of round is player 1 : &#39;</span><span class="o">+</span><span class="n">name1</span><span class="p">)</span>
+        <span class="c1">#GIve both of the cards to the winner.</span>
+        <span class="k">if</span> <span class="n">winner</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            
+            <span class="n">player1</span><span class="p">[</span><span class="s1">&#39;cards&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p1_card</span><span class="p">)</span>
+            <span class="n">player1</span><span class="p">[</span><span class="s1">&#39;cards&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p2_card</span><span class="p">)</span>
+        
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="n">player2</span><span class="p">[</span><span class="s1">&#39;cards&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p1_card</span><span class="p">)</span>
+            <span class="n">player2</span><span class="p">[</span><span class="s1">&#39;cards&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p2_card</span><span class="p">)</span>
+    <span class="c1">#return the players with their cards at the end of the game.</span>
+    <span class="k">return</span> <span class="n">player1</span><span class="p">,</span><span class="n">player2</span></div>
+
+<div class="viewcode-block" id="display_winner"><a class="viewcode-back" href="../../cards.html#cards.main.display_winner">[docs]</a><span class="k">def</span> <span class="nf">display_winner</span><span class="p">(</span><span class="n">player1</span><span class="p">,</span><span class="n">player2</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;show who won, with both players results.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    object : player1</span>
+<span class="sd">        player1 with their cards and name</span>
+<span class="sd">    object : player2</span>
+<span class="sd">        player2 with their cards and name</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">player1</span><span class="p">[</span><span class="s1">&#39;cards&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">player2</span><span class="p">[</span><span class="s1">&#39;cards&#39;</span><span class="p">]):</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="n">player1</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; (player1) is the winner&#39;</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">player2</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; (player2) is the winner&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;scores are, p1 : score &#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">player1</span><span class="p">[</span><span class="s1">&#39;cards&#39;</span><span class="p">]),</span> <span class="s1">&#39;, p2 socres : &#39;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">player2</span><span class="p">[</span><span class="s1">&#39;cards&#39;</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;total results are&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">player1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">player2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../cards.html#cards.main.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Runs the main game. &#39;&#39;&#39;</span>
+
+    <span class="c1">#gets player one&#39;s username</span>
+    <span class="n">player1_name</span> <span class="o">=</span> <span class="n">enter_username</span><span class="p">(</span><span class="s1">&#39;player 1 &#39;</span><span class="p">)</span>
+    <span class="c1">#Checks  player one is authorised to play the game.</span>
+    <span class="n">player1_auth</span> <span class="o">=</span> <span class="n">authenticate_user</span><span class="p">(</span><span class="n">player1_name</span><span class="p">)</span>
+
+    <span class="c1">#gets player one&#39;s username</span>
+    <span class="n">player2_name</span> <span class="o">=</span> <span class="n">enter_username</span><span class="p">(</span><span class="s1">&#39;player 2 &#39;</span><span class="p">)</span>    
+
+    <span class="c1">#Checks  player two is authorised to play the game.</span>
+    <span class="n">player2_auth</span> <span class="o">=</span> <span class="n">authenticate_user</span><span class="p">(</span><span class="n">player2_name</span><span class="p">)</span>
+    
+    <span class="c1">#Gets a shuffled deck for the game.</span>
+    <span class="n">deck</span> <span class="o">=</span> <span class="n">setup_cards</span><span class="p">()</span>
+    <span class="c1">#plays the game and gets both players results after playing the game</span>
+    <span class="n">player1</span><span class="p">,</span><span class="n">player2</span> <span class="o">=</span> <span class="n">play_game</span><span class="p">(</span><span class="n">player1_name</span><span class="p">,</span><span class="n">player2_name</span><span class="p">,</span><span class="n">deck</span><span class="p">)</span>
+    <span class="c1">#displays the winner out of both of the players.</span>
+    <span class="n">display_winner</span><span class="p">(</span><span class="n">player1</span><span class="p">,</span><span class="n">player2</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, James Rich.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
